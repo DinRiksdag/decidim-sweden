@@ -1,8 +1,8 @@
-# decidim-sweden
+# dinriksdag
 
 Citizen Participation and Open Government application.
 
-This is the open-source repository for decidim-sweden, based on [Decidim](https://github.com/decidim/decidim).
+This is the open-source repository for dinriksdag, based on [Decidim](https://github.com/decidim/decidim).
 
 ## Setting up the application
 

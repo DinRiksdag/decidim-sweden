@@ -1,0 +1,68 @@
+/*------NAV BAR------*/
+
+body {
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+/*Navbar color when nav is white*/
+.title-bar
+{
+    background-color: #FFF;
+    border-top-color: #FFF;
+}
+/*Color for the org title that displays when there is no logo*/
+.logo-wrapper  span
+{
+    color: #17526e !important;
+}
+
+/*color for navbar notification bell*/
+.topbar__notifications .icon
+{
+    fill: #17526e;
+}
+
+/*color of hamburger menu (displays when screen is small)*/
+.topbar__menu button
+{
+    color: #17526e;
+}
+
+/*color of user menu*/
+.topbar__user__login a
+{
+    color: #17526e;
+}
+
+/*color of dropdown user menu*/
+.topbar__dropmenu .dropdown>li>a
+{
+    color: #17526e;
+}
+
+/*color of triangle toggle that displays dropdown menu on mouse hover*/
+.topbar__dropmenu>ul>li>a:after
+{
+    border-top-color: #17526e !important;
+}
+/*------END OF PRIMARY NAV BAR------*/
+
+.navbar {
+    background-color: #17526e;
+}
+
+.main-nav__link a {
+    font-weight: bold;
+    color: #fff;
+}
+
+.main-nav__link--active a {
+    background-color: #113141;
+    box-shadow: inset 0 -7px 0 0 #71b3d9;
+}
+
+.main-nav__link a:hover, a:focus {
+    background-color: #113141;
+    box-shadow: inset 0 -7px 0 0 #71b3d9;
+    transition: transform .3s ease;
+}

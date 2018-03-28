@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180320135041) do
+ActiveRecord::Schema.define(version: 20180328135122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -682,6 +682,29 @@ ActiveRecord::Schema.define(version: 20180320135041) do
     t.index ["scope_type_id"], name: "index_decidim_scopes_on_scope_type_id"
   end
 
+  create_table "decidim_sortitions_sortitions", force: :cascade do |t|
+    t.bigint "decidim_component_id"
+    t.integer "decidim_proposals_component_id"
+    t.integer "dice", null: false
+    t.integer "target_items", null: false
+    t.datetime "request_timestamp", null: false
+    t.jsonb "selected_proposals"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "witnesses"
+    t.jsonb "additional_info"
+    t.bigint "decidim_author_id"
+    t.string "reference"
+    t.jsonb "title"
+    t.jsonb "cancel_reason"
+    t.datetime "cancelled_on"
+    t.integer "cancelled_by_user_id"
+    t.jsonb "candidate_proposals"
+    t.index ["decidim_author_id"], name: "index_decidim_sortitions_sortitions_on_decidim_author_id"
+    t.index ["decidim_component_id"], name: "index_sortitions__on_feature"
+    t.index ["decidim_proposals_component_id"], name: "index_sortitions__on_proposals_feature"
+  end
+
   create_table "decidim_static_pages", id: :serial, force: :cascade do |t|
     t.jsonb "title", null: false
     t.string "slug", null: false
@@ -713,6 +736,7 @@ ActiveRecord::Schema.define(version: 20180320135041) do
     t.boolean "mandatory"
     t.string "question_type"
     t.jsonb "answer_options", default: []
+    t.jsonb "description"
     t.index ["decidim_survey_id"], name: "index_decidim_surveys_survey_questions_on_decidim_survey_id"
   end
 
@@ -818,6 +842,52 @@ ActiveRecord::Schema.define(version: 20180320135041) do
     t.index ["reset_password_token"], name: "index_decidim_users_on_reset_password_token", unique: true
   end
 
+  create_table "oauth_access_grants", force: :cascade do |t|
+    t.integer "resource_owner_id", null: false
+    t.bigint "application_id", null: false
+    t.string "token", null: false
+    t.integer "expires_in", null: false
+    t.text "redirect_uri", null: false
+    t.datetime "created_at", null: false
+    t.datetime "revoked_at"
+    t.string "scopes"
+    t.index ["application_id"], name: "index_oauth_access_grants_on_application_id"
+    t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true
+  end
+
+  create_table "oauth_access_tokens", force: :cascade do |t|
+    t.integer "resource_owner_id"
+    t.bigint "application_id"
+    t.string "token", null: false
+    t.string "refresh_token"
+    t.integer "expires_in"
+    t.datetime "revoked_at"
+    t.datetime "created_at", null: false
+    t.string "scopes"
+    t.string "previous_refresh_token", default: "", null: false
+    t.index ["application_id"], name: "index_oauth_access_tokens_on_application_id"
+    t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
+    t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
+    t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true
+  end
+
+  create_table "oauth_applications", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "organization_name", null: false
+    t.string "organization_url", null: false
+    t.string "organization_logo", null: false
+    t.string "uid", null: false
+    t.string "secret", null: false
+    t.text "redirect_uri", null: false
+    t.string "scopes", default: "", null: false
+    t.bigint "decidim_organization_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "type"
+    t.index ["decidim_organization_id"], name: "index_oauth_applications_on_decidim_organization_id"
+    t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  end
+
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
     t.integer "item_id", null: false
@@ -845,4 +915,9 @@ ActiveRecord::Schema.define(version: 20180320135041) do
   add_foreign_key "decidim_scopes", "decidim_scopes", column: "parent_id"
   add_foreign_key "decidim_static_pages", "decidim_organizations"
   add_foreign_key "decidim_users", "decidim_organizations"
+  add_foreign_key "oauth_access_grants", "decidim_users", column: "resource_owner_id"
+  add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_tokens", "decidim_users", column: "resource_owner_id"
+  add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_applications", "decidim_organizations"
 end

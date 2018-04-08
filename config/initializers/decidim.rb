@@ -2,7 +2,7 @@
 
 Decidim.configure do |config|
   config.application_name = "Din Riksdag"
-  config.mailer_sender = "Din Riksdag"
+  config.mailer_sender = "info@dinriksdag.se"
 
   # Change these lines to set your preferred locales
   config.default_locale = :en

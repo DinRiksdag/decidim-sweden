@@ -10,7 +10,7 @@ gem "decidim", git: "https://github.com/decidim/decidim.git", :ref => '0bab130'
 #gem 'decidim-consultations', git: "https://github.com/decidim/decidim-module-consultations.git"
 #gem 'decidim-initiatives', git: "https://github.com/decidim/decidim-initiatives.git"
 
-gem "decidim-riksdagen", path: "https://github.com/PierreMesure/decidim-module-riksdagen.git"
+gem "decidim-riksdagen", git: "https://github.com/DinRiksdag/decidim-module-riksdagen.git"
 gem "decidim-export", git: "https://github.com/PierreMesure/decidim-user-export.git"
 
 #gem 'decidim-personal_number', git: "https://github.com/PierreMesure/decidim-module-personal_number.git"

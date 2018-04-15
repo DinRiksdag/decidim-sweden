@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/DinRiksdag/decidim-module-riksdagen.git
+  revision: 3685be0673f7eac850faffec9d9c41aff07deef2
+  specs:
+    decidim-riksdagen (0.11.0.pre)
+      decidim-admin (= 0.11.0.pre)
+      decidim-core (= 0.11.0.pre)
+      decidim-participatory_processes (= 0.11.0.pre)
+
+GIT
   remote: https://github.com/PierreMesure/decidim-user-export.git
   revision: 1bd6c38c1b86db31a87e11648478ecf22813d678
   specs:
@@ -168,14 +177,6 @@ GIT
       sassc-rails (~> 1.3)
     decidim-verifications (0.11.0.pre)
       decidim-core (= 0.11.0.pre)
-
-PATH
-  remote: ../decidim-module-riksdagen
-  specs:
-    decidim-riksdagen (0.11.0.pre)
-      decidim-admin (= 0.11.0.pre)
-      decidim-core (= 0.11.0.pre)
-      decidim-participatory_processes (= 0.11.0.pre)
 
 GEM
   remote: https://rubygems.org/
@@ -685,7 +686,7 @@ GEM
     uglifier (4.1.9)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.3.0)
-    valid_email2 (2.2.2)
+    valid_email2 (2.2.3)
       activemodel (>= 3.2)
       mail (~> 2.5)
     virtus (1.0.5)

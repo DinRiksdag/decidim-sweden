@@ -1,6 +1,14 @@
 GIT
+  remote: https://github.com/PierreMesure/decidim-user-export.git
+  revision: 1bd6c38c1b86db31a87e11648478ecf22813d678
+  specs:
+    decidim-export (0.0.1)
+      decidim-core
+
+GIT
   remote: https://github.com/decidim/decidim.git
-  revision: 6a47d25312a8fde7aa2c8233fc90bc186d3603a1
+  revision: 0bab130fd7a484b45c43d75de0107819f7259010
+  ref: 0bab130
   specs:
     decidim (0.11.0.pre)
       decidim-accountability (= 0.11.0.pre)
@@ -20,6 +28,11 @@ GIT
       decidim-surveys (= 0.11.0.pre)
       decidim-system (= 0.11.0.pre)
       decidim-verifications (= 0.11.0.pre)
+
+GIT
+  remote: https://github.com/decidim/decidim.git
+  revision: 92ac092c4dcebf28ec7386793f930093fd28cec7
+  specs:
     decidim-accountability (0.11.0.pre)
       decidim-comments (= 0.11.0.pre)
       decidim-core (= 0.11.0.pre)
@@ -81,7 +94,7 @@ GIT
       paper_trail (~> 8.0)
       pg (>= 0.18, < 2)
       premailer-rails (~> 1.9)
-      rails (~> 5.1.5)
+      rails (~> 5.1, < 5.2.x)
       rails-i18n (~> 5.0)
       rectify (~> 0.11.0)
       redis (~> 4.0)
@@ -108,7 +121,7 @@ GIT
       i18n-tasks (~> 0.9.18)
       nokogiri (~> 1.8, >= 1.8.2)
       rails-controller-testing (~> 1.0)
-      rspec-cells
+      rspec-cells (~> 0.3.4)
       rspec-html-matchers (~> 0.9.1)
       rspec-rails (~> 3.7)
       rspec_junit_formatter (~> 0.3.0)
@@ -155,6 +168,14 @@ GIT
       sassc-rails (~> 1.3)
     decidim-verifications (0.11.0.pre)
       decidim-core (= 0.11.0.pre)
+
+PATH
+  remote: ../decidim-module-riksdagen
+  specs:
+    decidim-riksdagen (0.11.0.pre)
+      decidim-admin (= 0.11.0.pre)
+      decidim-core (= 0.11.0.pre)
+      decidim-participatory_processes (= 0.11.0.pre)
 
 GEM
   remote: https://rubygems.org/
@@ -225,7 +246,7 @@ GEM
     bindex (0.5.0)
     builder (3.2.3)
     byebug (10.0.2)
-    cancancan (2.1.3)
+    cancancan (2.1.4)
     capybara (2.18.0)
       addressable
       mini_mime (>= 0.1.3)
@@ -245,7 +266,7 @@ GEM
     cells-erb (0.1.0)
       cells (~> 4.0)
       erbse (>= 0.1.1)
-    cells-rails (0.0.8)
+    cells-rails (0.0.9)
       actionpack (>= 3.0)
       cells (>= 4.1.6, < 5.0.0)
     childprocess (0.9.0)
@@ -264,10 +285,10 @@ GEM
     connection_pool (2.2.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    crass (1.0.3)
+    crass (1.0.4)
     css_parser (1.6.0)
       addressable
-    dalli (2.7.7)
+    dalli (2.7.8)
     date_validator (0.9.0)
       activemodel
       activesupport
@@ -285,9 +306,9 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
-    devise-i18n (1.6.1)
+    devise-i18n (1.6.2)
       devise (>= 4.4)
-    devise_invitable (1.7.3)
+    devise_invitable (1.7.4)
       actionmailer (>= 4.1.0)
       devise (>= 4.0.0)
     diff-lcs (1.3)
@@ -406,7 +427,7 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.6.0)
       launchy (~> 2.2)
-    letter_opener_web (1.3.3)
+    letter_opener_web (1.3.4)
       actionmailer (>= 3.2)
       letter_opener (~> 1.0)
       railties (>= 3.2)
@@ -470,7 +491,7 @@ GEM
       activerecord (>= 4.2, < 5.2)
       request_store (~> 1.1)
     parallel (1.12.1)
-    parser (2.5.0.5)
+    parser (2.5.1.0)
       ast (~> 2.4.0)
     passenger (5.2.3)
       rack
@@ -487,7 +508,7 @@ GEM
       actionmailer (>= 3, < 6)
       premailer (~> 1.7, >= 1.7.9)
     public_suffix (3.0.2)
-    puma (3.11.3)
+    puma (3.11.4)
     rack (2.0.4)
     rack-cors (1.0.2)
     rack-protection (2.0.1)
@@ -583,7 +604,7 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
-    rubocop-rspec (1.24.0)
+    rubocop-rspec (1.25.1)
       rubocop (>= 0.53.0)
     ruby-ole (1.2.12.1)
     ruby-progressbar (1.9.0)
@@ -661,7 +682,7 @@ GEM
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uber (0.1.0)
-    uglifier (4.1.8)
+    uglifier (4.1.9)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.3.0)
     valid_email2 (2.2.2)
@@ -674,7 +695,7 @@ GEM
       equalizer (~> 0.0, >= 0.0.9)
     warden (1.2.7)
       rack (>= 1.0)
-    web-console (3.5.1)
+    web-console (3.6.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
@@ -699,6 +720,8 @@ DEPENDENCIES
   dalli
   decidim!
   decidim-dev!
+  decidim-export!
+  decidim-riksdagen!
   faker (~> 1.8)
   fog-aws
   letter_opener_web (~> 1.3)

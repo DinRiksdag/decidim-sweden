@@ -4,12 +4,23 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", git: "https://github.com/decidim/decidim.git"
+gem "decidim", git: "https://github.com/decidim/decidim.git", :ref => '0bab130'
+
+#gem 'decidim-generators', git: "https://github.com/decidim/decidim-generators.git"
+#gem 'decidim-consultations', git: "https://github.com/decidim/decidim-module-consultations.git"
+#gem 'decidim-initiatives', git: "https://github.com/decidim/decidim-initiatives.git"
+
+gem "decidim-riksdagen", path: "../decidim-module-riksdagen"
+gem "decidim-export", git: "https://github.com/PierreMesure/decidim-user-export.git"
+
+#gem 'decidim-personal_number', git: "https://github.com/PierreMesure/decidim-module-personal_number.git"
 
 gem "puma", "~> 3.0"
 gem "uglifier", "~> 4.1"
 
 gem "faker", "~> 1.8"
+
+#gem 'iconv'
 
 group :development, :test do
   gem "byebug", "~> 10.0", platform: :mri

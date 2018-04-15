@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180408182829) do
+ActiveRecord::Schema.define(version: 20180414125528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,6 +125,25 @@ ActiveRecord::Schema.define(version: 20180408182829) do
     t.bigint "parent_id"
     t.ltree "parents_path"
     t.integer "children_count", default: 0
+    t.jsonb "purpose_of_action"
+    t.jsonb "composition"
+    t.string "assembly_type"
+    t.jsonb "assembly_type_other"
+    t.date "creation_date"
+    t.string "created_by"
+    t.jsonb "created_by_other"
+    t.date "duration"
+    t.date "included_at"
+    t.date "closing_date"
+    t.jsonb "closing_date_reason"
+    t.jsonb "internal_organisation"
+    t.boolean "is_transparent", default: true
+    t.jsonb "special_features"
+    t.string "twitter_handler"
+    t.string "instagram_handler"
+    t.string "facebook_handler"
+    t.string "youtube_handler"
+    t.string "github_handler"
     t.index ["decidim_area_id"], name: "index_decidim_assemblies_on_decidim_area_id"
     t.index ["decidim_organization_id", "slug"], name: "index_unique_assembly_slug_and_organization", unique: true
     t.index ["decidim_organization_id"], name: "index_decidim_assemblies_on_decidim_organization_id"
@@ -808,6 +827,23 @@ ActiveRecord::Schema.define(version: 20180408182829) do
     t.index ["decidim_organization_id"], name: "index_decidim_static_pages_on_decidim_organization_id"
   end
 
+  create_table "decidim_surveys_survey_answer_choices", force: :cascade do |t|
+    t.bigint "decidim_survey_answer_id"
+    t.bigint "decidim_survey_answer_option_id"
+    t.jsonb "body"
+    t.text "custom_body"
+    t.integer "position"
+    t.index ["decidim_survey_answer_id"], name: "index_decidim_surveys_answer_choices_answer_id"
+    t.index ["decidim_survey_answer_option_id"], name: "index_decidim_surveys_answer_choices_answer_option_id"
+  end
+
+  create_table "decidim_surveys_survey_answer_options", force: :cascade do |t|
+    t.bigint "decidim_survey_question_id"
+    t.jsonb "body"
+    t.boolean "free_text"
+    t.index ["decidim_survey_question_id"], name: "index_decidim_surveys_answer_options_question_id"
+  end
+
   create_table "decidim_surveys_survey_answers", id: :serial, force: :cascade do |t|
     t.integer "decidim_user_id"
     t.integer "decidim_survey_id"
@@ -815,7 +851,6 @@ ActiveRecord::Schema.define(version: 20180408182829) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "body"
-    t.jsonb "choices"
     t.index ["decidim_survey_id"], name: "index_decidim_surveys_survey_answers_on_decidim_survey_id"
     t.index ["decidim_survey_question_id"], name: "index_decidim_surveys_answers_question_id"
     t.index ["decidim_user_id"], name: "index_decidim_surveys_survey_answers_on_decidim_user_id"
@@ -829,7 +864,6 @@ ActiveRecord::Schema.define(version: 20180408182829) do
     t.integer "position"
     t.boolean "mandatory"
     t.string "question_type"
-    t.jsonb "answer_options", default: []
     t.jsonb "description"
     t.integer "max_choices"
     t.index ["decidim_survey_id"], name: "index_decidim_surveys_survey_questions_on_decidim_survey_id"

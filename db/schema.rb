@@ -152,6 +152,26 @@ ActiveRecord::Schema.define(version: 2018_06_14_090938) do
     t.index ["parent_id"], name: "decidim_assemblies_assemblies_on_parent_id"
   end
 
+  create_table "decidim_assembly_members", force: :cascade do |t|
+    t.bigint "decidim_assembly_id"
+    t.integer "weight", default: 0, null: false
+    t.string "full_name"
+    t.string "gender"
+    t.date "birthday"
+    t.string "birthplace"
+    t.date "designation_date"
+    t.string "designation_mode"
+    t.string "position"
+    t.string "position_other"
+    t.date "ceased_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "decidim_user_id"
+    t.index ["decidim_assembly_id"], name: "index_decidim_assembly_members_on_decidim_assembly_id"
+    t.index ["decidim_user_id"], name: "index_decidim_assembly_members_on_decidim_user_id"
+    t.index ["weight", "created_at"], name: "index_decidim_assembly_members_on_weight_and_created_at"
+  end
+
   create_table "decidim_assembly_user_roles", force: :cascade do |t|
     t.integer "decidim_user_id"
     t.integer "decidim_assembly_id"
@@ -436,6 +456,7 @@ ActiveRecord::Schema.define(version: 2018_06_14_090938) do
     t.datetime "expired_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "reason"
     t.index ["decidim_admin_id"], name: "index_decidim_impersonation_logs_on_decidim_admin_id"
     t.index ["decidim_user_id"], name: "index_decidim_impersonation_logs_on_decidim_user_id"
   end
@@ -487,9 +508,25 @@ ActiveRecord::Schema.define(version: 2018_06_14_090938) do
     t.integer "available_slots", default: 0, null: false
     t.jsonb "registration_terms"
     t.integer "reserved_slots", default: 0, null: false
+    t.boolean "private_meeting", default: false
+    t.boolean "transparent", default: true
+    t.bigint "organizer_id"
+    t.jsonb "services", default: []
     t.index ["decidim_author_id"], name: "index_decidim_meetings_meetings_on_decidim_author_id"
     t.index ["decidim_component_id"], name: "index_decidim_meetings_meetings_on_decidim_component_id"
     t.index ["decidim_scope_id"], name: "index_decidim_meetings_meetings_on_decidim_scope_id"
+    t.index ["organizer_id"], name: "index_decidim_meetings_meetings_on_organizer_id"
+  end
+
+  create_table "decidim_meetings_minutes", force: :cascade do |t|
+    t.bigint "decidim_meeting_id"
+    t.jsonb "description"
+    t.string "video_url"
+    t.string "audio_url"
+    t.boolean "visible"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["decidim_meeting_id"], name: "index_decidim_meetings_minutes_on_decidim_meeting_id"
   end
 
   create_table "decidim_meetings_registrations", force: :cascade do |t|

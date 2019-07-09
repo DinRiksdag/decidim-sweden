@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_03_085757) do
+ActiveRecord::Schema.define(version: 2019_07_08_200833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "ltree"
@@ -499,6 +499,7 @@ ActiveRecord::Schema.define(version: 2019_04_03_085757) do
     t.bigint "decidim_followable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["decidim_followable_id", "decidim_followable_type"], name: "index_follows_followable_id_and_type"
     t.index ["decidim_user_id", "decidim_followable_id", "decidim_followable_type"], name: "index_uniq_on_follows_user_and_followable", unique: true
     t.index ["decidim_user_id"], name: "index_decidim_follows_on_decidim_user_id"
   end
@@ -660,6 +661,13 @@ ActiveRecord::Schema.define(version: 2019_04_03_085757) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "banner_image"
+    t.boolean "collect_user_extra_fields", default: false
+    t.boolean "online_signature_enabled", default: true, null: false
+    t.jsonb "extra_fields_legal_information"
+    t.integer "minimum_committee_members"
+    t.boolean "validate_sms_code_on_votes", default: false
+    t.string "document_number_authorization_handler"
+    t.boolean "undo_online_signatures_enabled", default: true, null: false
     t.index ["decidim_organization_id"], name: "index_decidim_initiative_types_on_decidim_organization_id"
   end
 
@@ -669,6 +677,9 @@ ActiveRecord::Schema.define(version: 2019_04_03_085757) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "decidim_user_group_id"
+    t.text "encrypted_metadata"
+    t.string "timestamp"
+    t.string "hash_id"
     t.index ["decidim_author_id"], name: "index_decidim_initiatives_votes_on_decidim_author_id"
     t.index ["decidim_initiative_id", "decidim_author_id", "decidim_user_group_id"], name: "decidim_initiatives_voutes_author_uniqueness_index", unique: true
     t.index ["decidim_initiative_id"], name: "index_decidim_initiatives_votes_on_decidim_initiative_id"
@@ -762,6 +773,7 @@ ActiveRecord::Schema.define(version: 2019_04_03_085757) do
     t.datetime "updated_at", null: false
     t.string "code"
     t.datetime "validated_at"
+    t.bigint "decidim_user_group_id"
     t.index ["decidim_meeting_id"], name: "index_decidim_meetings_registrations_on_decidim_meeting_id"
     t.index ["decidim_user_id", "decidim_meeting_id"], name: "decidim_meetings_registrations_user_meeting_unique", unique: true
     t.index ["decidim_user_id"], name: "index_decidim_meetings_registrations_on_decidim_user_id"
@@ -845,6 +857,7 @@ ActiveRecord::Schema.define(version: 2019_04_03_085757) do
     t.datetime "sent_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "extended_data", default: {}
     t.index ["author_id"], name: "index_decidim_newsletters_on_author_id"
     t.index ["organization_id"], name: "index_decidim_newsletters_on_organization_id"
   end
@@ -906,6 +919,8 @@ ActiveRecord::Schema.define(version: 2019_04_03_085757) do
     t.string "id_documents_methods", default: ["online"], array: true
     t.jsonb "id_documents_explanation_text", default: {}
     t.boolean "user_groups_enabled", default: false, null: false
+    t.jsonb "colors", default: {}
+    t.jsonb "smtp_settings"
     t.index ["host"], name: "index_decidim_organizations_on_host", unique: true
     t.index ["name"], name: "index_decidim_organizations_on_name", unique: true
   end
@@ -984,6 +999,8 @@ ActiveRecord::Schema.define(version: 2019_04_03_085757) do
     t.date "start_date"
     t.boolean "private_space", default: false
     t.string "reference"
+    t.bigint "decidim_area_id"
+    t.index ["decidim_area_id"], name: "index_decidim_participatory_processes_on_decidim_area_id"
     t.index ["decidim_organization_id", "slug"], name: "index_unique_process_slug_and_organization", unique: true
     t.index ["decidim_organization_id"], name: "index_decidim_processes_on_decidim_organization_id"
   end
@@ -1319,6 +1336,7 @@ ActiveRecord::Schema.define(version: 2019_04_03_085757) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "role", default: "requested", null: false
+    t.index ["decidim_user_group_id", "decidim_user_id"], name: "index_user_group_memberships_group_id_user_id"
     t.index ["decidim_user_group_id"], name: "index_decidim_user_group_memberships_on_decidim_user_group_id"
     t.index ["decidim_user_id", "decidim_user_group_id"], name: "decidim_user_group_memberships_unique_user_and_group_ids", unique: true
     t.index ["decidim_user_id"], name: "index_decidim_user_group_memberships_on_decidim_user_id"
@@ -1376,12 +1394,22 @@ ActiveRecord::Schema.define(version: 2019_04_03_085757) do
     t.index ["confirmation_token"], name: "index_decidim_users_on_confirmation_token", unique: true
     t.index ["decidim_organization_id"], name: "index_decidim_users_on_decidim_organization_id"
     t.index ["email", "decidim_organization_id"], name: "index_decidim_users_on_email_and_decidim_organization_id", unique: true, where: "((deleted_at IS NULL) AND (managed = false) AND ((type)::text = 'Decidim::User'::text))"
+    t.index ["id", "type"], name: "index_decidim_users_on_id_and_type"
     t.index ["invitation_token"], name: "index_decidim_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_decidim_users_on_invitations_count"
+    t.index ["invited_by_id", "invited_by_type"], name: "index_decidim_users_on_invited_by_id_and_invited_by_type"
     t.index ["invited_by_id"], name: "index_decidim_users_on_invited_by_id"
     t.index ["nickname", "decidim_organization_id"], name: "index_decidim_users_on_nickame_and_decidim_organization_id", unique: true, where: "((deleted_at IS NULL) AND (managed = false))"
     t.index ["officialized_at"], name: "index_decidim_users_on_officialized_at"
     t.index ["reset_password_token"], name: "index_decidim_users_on_reset_password_token", unique: true
+  end
+
+  create_table "decidim_verifications_csv_data", force: :cascade do |t|
+    t.string "email"
+    t.bigint "decidim_organization_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["decidim_organization_id"], name: "index_verifications_csv_census_to_organization"
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -1438,6 +1466,7 @@ ActiveRecord::Schema.define(version: 2019_04_03_085757) do
     t.jsonb "object"
     t.datetime "created_at"
     t.text "object_changes"
+    t.index ["item_id", "item_type"], name: "index_versions_on_item_id_and_item_type"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
@@ -1459,6 +1488,7 @@ ActiveRecord::Schema.define(version: 2019_04_03_085757) do
   add_foreign_key "decidim_scopes", "decidim_scopes", column: "parent_id"
   add_foreign_key "decidim_static_pages", "decidim_organizations"
   add_foreign_key "decidim_users", "decidim_organizations"
+  add_foreign_key "decidim_verifications_csv_data", "decidim_organizations"
   add_foreign_key "oauth_access_grants", "decidim_users", column: "resource_owner_id"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "decidim_users", column: "resource_owner_id"

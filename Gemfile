@@ -4,11 +4,15 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.16.1"
-gem "decidim-consultations", "0.16.1"
-gem "decidim-initiatives", "0.16.1"
+DECIDIM_VERSION = "0.18.0"
+
+gem "decidim", DECIDIM_VERSION
+gem "decidim-consultations", DECIDIM_VERSION
+gem "decidim-initiatives", DECIDIM_VERSION
 
 gem "bootsnap", "~> 1.3"
+
+gem "wicked_pdf"
 
 gem "puma", "~> 3.0"
 gem "uglifier", "~> 4.1"
@@ -20,7 +24,7 @@ gem "faker", "~> 1.9"
 group :development, :test do
   gem "byebug", "~> 10.0", platform: :mri
 
-  gem "decidim-dev", "0.16.1"
+  gem "decidim-dev", DECIDIM_VERSION
 end
 
 group :development do

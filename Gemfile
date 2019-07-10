@@ -36,7 +36,6 @@ group :development do
 end
 
 group :production do
-  gem "passenger"
   gem "sidekiq"
   gem "fog-aws"
 end
